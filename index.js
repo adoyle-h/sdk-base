@@ -14,12 +14,6 @@ class Base extends EventEmitter {
     if (options && options.initMethod) {
       assert(is.generatorFunction(this[options.initMethod]),
         `[sdk-base] this.${options.initMethod} should be a generator function.`);
-
-      process.nextTick(() => {
-        co(this[options.initMethod].bind(this))
-          .then(() => this.ready(true))
-          .catch(err => this.ready(err));
-      });
     }
     this.options = options || {};
     this._ready = false;
